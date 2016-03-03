@@ -12,8 +12,34 @@
     tools:context="com.example.adam.android_arduino_bluetooth.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ON/OFF"
+        android:id="@+id/toggleButton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textOff="Off"
+        android:textOn="On" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOW/HIGH"
+        android:id="@+id/toggleButton2"
+        android:layout_below="@+id/toggleButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:textOff="Low"
+        android:textOn="High" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="LED Bluetooth Controller"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
 </RelativeLayout>
