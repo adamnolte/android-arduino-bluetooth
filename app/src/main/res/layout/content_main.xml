@@ -26,19 +26,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ON/OFF"
-        android:id="@+id/switch1"
+        android:id="@+id/onoffswitch"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HIGH/LOW"
-        android:id="@+id/toggleButton"
-        android:layout_below="@+id/switch1"
-        android:layout_alignRight="@+id/switch1"
-        android:layout_alignEnd="@+id/switch1"
-        android:layout_marginTop="25dp"
-        android:textOff="LOW"
-        android:textOn="HIGH" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/onoffswitch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:id="@+id/highLowRadio">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HIGH"
+            android:id="@+id/highButton"
+            android:layout_gravity="center_horizontal"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOW"
+            android:id="@+id/lowButton"
+            android:layout_gravity="center_horizontal"
+            android:checked="false" />
+    </RadioGroup>
+
 </RelativeLayout>
