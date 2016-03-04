@@ -1,4 +1,4 @@
-package com.example.adam.android_arduino_bluetooth;
+package com.ece3110.adam.android_arduino_bluetooth;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
