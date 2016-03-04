@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.adam.android_arduino_bluetooth.MainActivity">
+    tools:context="com.ece3110.adam.android_arduino_bluetooth.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
