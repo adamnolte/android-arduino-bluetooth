@@ -12,6 +12,7 @@ import android.widget.Switch;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final UUID SERIAL_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // MAC-address of Bluetooth module
-    private static String macAddress = "00:15:FF:F2:19:5F";
+    private static String macAddress = "00:15:FF:F3:27:01";
     private final static int REQUEST_ENABLE_BT = 1;
 
 
@@ -36,18 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Check if device bluetooth enabled if not exit
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (btAdapter == null) {
-            finish();
-        }
-
-        //If adapter off.. Attempt to turn on
-        if (!btAdapter.isEnabled()) {
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, REQUEST_ENABLE_BT);
-        }
-
+        connectBt();
 
         onOff = 0;
         highLow = 1;
@@ -86,47 +76,45 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         System.out.println("Resume");
-
-        //Connect To Bluetooth Device in serial mode
-        BluetoothDevice remoteDevice = btAdapter.getRemoteDevice(macAddress);
-        try {
-            btSocket = remoteDevice.createRfcommSocketToServiceRecord(SERIAL_UUID);
-        }
-        catch(IOException e){
-            System.out.println("Error Creating Socket");
-        }
-
-        //Establish connection and data stream
-        try {
-            btSocket.connect();
-            outStream = btSocket.getOutputStream();
-        }
-        catch(IOException e){
-            System.out.println("Error Creating Output Stream");
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         System.out.println("paused");
+    }
 
-        //Flush the output stream
-        if(outStream != null){
-            try {
-                outStream.flush();
-            }
-            catch(IOException e){
-                System.out.println("Error flushing output stream");
+    public void connectBt(){
+        //Check if device bluetooth enabled if not exit
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (btAdapter == null) {
+            finish();
+        }
+
+        //If adapter off.. Attempt to turn on
+        if (!btAdapter.isEnabled()) {
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBluetooth, REQUEST_ENABLE_BT);
+        }
+
+        BluetoothDevice remoteDevice = null;
+        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
+        if(pairedDevices.size() > 0){
+            for(BluetoothDevice device: pairedDevices){
+                if(device.getName().equalsIgnoreCase("AEGIN")){
+                    remoteDevice = device;
+                    break;
+                }
             }
         }
 
-        //Close the socket connection to device
-        try{
-            btSocket.close();
+        try {
+            btSocket = remoteDevice.createRfcommSocketToServiceRecord(SERIAL_UUID);
+            btSocket.connect();
+            outStream = btSocket.getOutputStream();
         }
         catch(IOException e){
-            System.out.println("Error Closing bluetooth socket");
+            System.out.println("Error Connecting");
         }
     }
 
